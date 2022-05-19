@@ -1,4 +1,5 @@
 const canvas = document.getElementById("jsCanvas");
+const colors = document.getElementsByClassName("jsColor");
 let painting = false;
 
 // canvas element에 그림 그릴 영역 지정
@@ -35,12 +36,12 @@ function onMouseMove(event){
 
 }
 
-function onMouseDown(event){    
-    //canvas에 마우스 누르면 그림 그리기 시작
-    painting = true;
+function changeColor(event){
+    // 색 변경 이벤트. 
+    // 선택된 팔레트의 color 가져와서 선의 색으로 변경
+    const color = event.target.style.backgroundColor;
+    ctx.strokeStyle = color;
 }
-
-
 
 if (canvas){
     canvas.addEventListener("mousemove", onMouseMove); // 마우스 움직임 인식
@@ -50,3 +51,6 @@ if (canvas){
 }else{
     
 }
+
+// 팔레트 클릭할 때 색 변경 이벤트 발생
+Array.from(colors).forEach(color => color.addEventListener("click", changeColor));
