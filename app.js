@@ -2,6 +2,8 @@ const canvas = document.getElementById("jsCanvas");
 const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
+const saveBtn = document.getElementById("jsSave");
+const ctx = canvas.getContext("2d");
 
 let painting = false;   // 그림 그리는 모드인지
 let filling = false;    // 배경 채우는 모드인지
@@ -12,8 +14,12 @@ const CANVAS_HEIGHT = 500;
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
+// 먼저 canvas를 흰 배경으로 채우기
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+// Canvas 그림 그리기 관련 초기 설정
 const INITIAL_COLOR = "#2c2c2c";
-const ctx = canvas.getContext("2d");
 ctx.strokeStyle = INITIAL_COLOR; // 선의 색
 ctx.lineWidth = 2.5;         // 선의 두께
 
@@ -76,14 +82,25 @@ function handleCanvasClick(){
     }
 }
 
+function handleCM(event){ // 우클릭 방지
+    event.preventDefault();
+}
+
+function handleSaveClick(){
+    const image = canvas.toDataURL();             // canvas를 png 이미지로 저장
+    const link = document.createElement("a");     // 링크 만들어서
+    link.href = image;                              // href가 이미지 url이 되어야 하고
+    link.download = "PaintJS[EXPORT]";              // download는 그 이름을 가져와야 함.
+    link.click();
+}
+
 if (canvas){
     canvas.addEventListener("mousemove", onMouseMove); // 마우스 움직임 인식
     canvas.addEventListener("mousedown", startPainting); // 마우스 누르기 인식
     canvas.addEventListener("mouseup", stopPainting); // 마우스 떼기 인식
     canvas.addEventListener("mouseleave", stopPainting); // canvas 나가는 것 인식
     canvas.addEventListener("click", handleCanvasClick); // Fill mode에서 canvas 클릭시 배경 채우기
-}else{
-    
+    canvas.addEventListener("contextmenu", handleCM); // 우클릭 이벤트 발생 인식
 }
 
 // 팔레트 클릭할 때 색 변경 이벤트 발생
@@ -97,4 +114,9 @@ if(range){
 // fill 버튼 클릭 시 canvas 전체에 색 채우기
 if(mode){
     mode.addEventListener("click", hanldeModeClick);
+}
+
+// save 버튼 클릭시 canvas 저장
+if(saveBtn){
+    saveBtn.addEventListener("click", handleSaveClick);
 }
