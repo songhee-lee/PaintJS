@@ -23,6 +23,6 @@ Painting Board made with VanillaJS
 
 
 ### References
-- ![reset css](https://meyerweb.com/eric/tools/css/reset/)
-- ![2D Context](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
-- ![이미지 저장 toDoURL()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL)
+- [reset css](https://meyerweb.com/eric/tools/css/reset/)
+- [2D Context](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+- [이미지 저장 toDoURL()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL)
