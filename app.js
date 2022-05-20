@@ -1,6 +1,10 @@
 const canvas = document.getElementById("jsCanvas");
 const colors = document.getElementsByClassName("jsColor");
-let painting = false;
+const range = document.getElementById("jsRange");
+const mode = document.getElementById("jsMode");
+
+let painting = false;   // 그림 그리는 모드인지
+let filling = false;    // 배경 채우는 모드인지
 
 // canvas element에 그림 그릴 영역 지정
 canvas.width = 500;
@@ -43,6 +47,23 @@ function changeColor(event){
     ctx.strokeStyle = color;
 }
 
+function handleRangeChange(event){
+    // 선 굵기 변경 이벤트
+    // range의 움직인 값이 value 가져와서 선 굵기로 변경
+    ctx.lineWidth = event.target.value;
+}
+
+function hanldeModeClick(){
+    // canvas에 색채우기 이벤트
+    if (filling === true){
+        filling = false;
+        mode.innerText = "FILL";
+    }else{
+        filling = true;
+        mode.innerText = "PAINT";
+    }
+}
+
 if (canvas){
     canvas.addEventListener("mousemove", onMouseMove); // 마우스 움직임 인식
     canvas.addEventListener("mousedown", startPainting); // 마우스 누르기 인식
@@ -54,3 +75,13 @@ if (canvas){
 
 // 팔레트 클릭할 때 색 변경 이벤트 발생
 Array.from(colors).forEach(color => color.addEventListener("click", changeColor));
+
+// range 건드리면 선 굵기 변경 이벤트 발생
+if(range){
+    range.addEventListener("input", handleRangeChange);
+}
+
+// fill 버튼 클릭 시 canvas 전체에 색 채우기
+if(mode){
+    mode.addEventListener("click", hanldeModeClick);
+}
