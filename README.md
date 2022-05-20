@@ -1,7 +1,7 @@
 # PaintJS
 Painting Board made with VanillaJS
 
-<img src="paintJS.png"  width="500" height="300">
+<center><img src="paintJS.png"  width="500" height="300" /></center>
 
 ### 구성요소
 - 그림을 그릴 수 있는 Canvas
