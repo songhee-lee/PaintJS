@@ -7,13 +7,17 @@ let painting = false;   // 그림 그리는 모드인지
 let filling = false;    // 배경 채우는 모드인지
 
 // canvas element에 그림 그릴 영역 지정
-canvas.width = 500;
-canvas.height = 500;
+const CANVAS_WIDTH = 500;
+const CANVAS_HEIGHT = 500;
+canvas.width = CANVAS_WIDTH;
+canvas.height = CANVAS_HEIGHT;
 
+const INITIAL_COLOR = "#2c2c2c";
 const ctx = canvas.getContext("2d");
-ctx.strokeStyle = "#2c2c2c"; // 선의 색
+ctx.strokeStyle = INITIAL_COLOR; // 선의 색
 ctx.lineWidth = 2.5;         // 선의 두께
 
+ctx.fillStyle = INITIAL_COLOR; // 네모 상자의 색
 
 function stopPainting(){
     painting = false;
@@ -45,6 +49,7 @@ function changeColor(event){
     // 선택된 팔레트의 color 가져와서 선의 색으로 변경
     const color = event.target.style.backgroundColor;
     ctx.strokeStyle = color;
+    ctx.fillStyle = color; // 네모상자의 색상
 }
 
 function handleRangeChange(event){
@@ -54,7 +59,7 @@ function handleRangeChange(event){
 }
 
 function hanldeModeClick(){
-    // canvas에 색채우기 이벤트
+    // Fill 모드와 Paint 모드 변경하기
     if (filling === true){
         filling = false;
         mode.innerText = "FILL";
@@ -64,11 +69,19 @@ function hanldeModeClick(){
     }
 }
 
+function handleCanvasClick(){
+    // fill 모드에서 배경색 채우기
+    if (filling){
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT) // (x좌표, y좌표, 가로크기, 세로크기)
+    }
+}
+
 if (canvas){
     canvas.addEventListener("mousemove", onMouseMove); // 마우스 움직임 인식
     canvas.addEventListener("mousedown", startPainting); // 마우스 누르기 인식
     canvas.addEventListener("mouseup", stopPainting); // 마우스 떼기 인식
     canvas.addEventListener("mouseleave", stopPainting); // canvas 나가는 것 인식
+    canvas.addEventListener("click", handleCanvasClick); // Fill mode에서 canvas 클릭시 배경 채우기
 }else{
     
 }
